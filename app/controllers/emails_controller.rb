@@ -11,6 +11,10 @@ class EmailsController < ApplicationController
   # GET /emails/1.json
   def show
     @email.update_attribute(:marks_as_read, true)
+    respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js{}
+    end
   end
 
   # GET /emails/new
@@ -25,7 +29,7 @@ class EmailsController < ApplicationController
   # POST /emails
   # POST /emails.json
   def create
-    @email = Email.new(email_params)
+    @email = Email.create(object: Faker::Book.title, body: Faker::ChuckNorris.fact)
 
     respond_to do |format|
       if @email.save
@@ -77,8 +81,17 @@ class EmailsController < ApplicationController
   end
 
   def read
-    @email.update_attribute(:marks_as_read, false)
-    redirect_to root_path, notice: "Marked as un-read"
+    if @email.marks_as_read == true
+      @email.update_attribute(:marks_as_read, false)
+      redirect_to root_path, notice: "Marked as un-read"
+    else
+      @email.update_attribute(:marks_as_read, true)
+      redirect_to root_path, notice: "Marked as read"
+    end
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.js { }
+    end
   end
 
   private

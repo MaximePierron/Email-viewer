@@ -1,61 +1,23 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Emails</h1>
+<div class='parent grid-parent'>
+  <div class='child'>
+    <h1 class="email_title_big">Emails</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th><%= link_to 'New Email', new_email_path %></th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-</table>
+      <div class="links">
+        <%= button_to 'Receive a new Email', { action: "create" }, remote: true %>
+      </div>
 
-
-<table>
-  <thead>
-    <tr>
-      <th>Object</th>
-      <!-- <th>Body</th> -->
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @emails.each do |email| %>
-      <tr>
-      <td><div class="row clearfix">
-      <% if email.read? %>
-        <div class="email">
-          <p style="opacity: 0.4;"><strike><%= link_to(email) do%><%=email.object%><%end%></strike></p>
-        </div>
-        <div class="read">
-              <%= link_to "Mark un-read", read_email_path(email, email.id), method: :patch %>
-        </div>
-        <div class="trash">
-          <%= link_to 'Delete', email, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </div>
-      <% else %>
-          <div class="email">
-              <p><%= link_to(email) do%><%=email.object%><%end%></p>
-          </div>
-          <div class="read">
-              <%= link_to "Mark un-read", read_email_path(email, email.id), method: :patch %>
-          </div>
-          <div class="trash">
-              <%= link_to 'Delete', email, method: :delete, data: { confirm: 'Are you sure?' } %>
-          </div>
+      <div id="emails_wrapper">
+      <% @emails.each do |email| %>
+        <%= render "email_index", email: email%>
       <% end %>
-      </div></td>
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div class="viewer">
-      <b style="padding-left:10px;">What's it say ?</b>
-      <div id="email-display" style="display:none;"></div>
+      </div>
+  </div>
+  <div class='child'>
+    <h1 class="email_title_big">What's it say ?</h1>
+    <div id="email-display">
     </div>
+  </div>
 </div>
-
 
