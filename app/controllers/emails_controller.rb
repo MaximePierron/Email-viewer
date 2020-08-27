@@ -51,15 +51,20 @@ class EmailsController < ApplicationController
   # PATCH/PUT /emails/1
   # PATCH/PUT /emails/1.json
   def update
-    respond_to do |format|
-      if @email.update(email_params)
-        format.html { redirect_to @email, notice: 'Email was successfully updated.' }
-        format.json { render :show, status: :ok, location: @email }
-      else
-        format.html { render :edit }
-        format.json { render json: @email.errors, status: :unprocessable_entity }
+    if @email.marks_as_read == true
+      @email.update_attribute(:marks_as_read, false)
+      respond_to do |format|
+      format.html { redirect_to root_path, notice: "Marked as un-read" }
+      format.js { }
       end
+    else
+      @email.update_attribute(:marks_as_read, true)
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "Marked as read" }
+        format.js { }
+        end
     end
+  
   end
 
   # DELETE /emails/1
@@ -87,10 +92,6 @@ class EmailsController < ApplicationController
     else
       @email.update_attribute(:marks_as_read, true)
       redirect_to root_path, notice: "Marked as read"
-    end
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.js { }
     end
   end
 
