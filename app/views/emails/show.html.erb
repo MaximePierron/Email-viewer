@@ -1,17 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Object:</strong>
-  <%= @email.object %>
-</p>
-
-<p>
-  <%= @email.body %>
-</p>
-
 <div id="emails_wrapper">
   <%= render "email" %>
 </div>
 
-<%= link_to 'Destroy', @email, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'Delete', @email, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', emails_path %>

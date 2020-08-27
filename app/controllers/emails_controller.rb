@@ -1,5 +1,5 @@
 class EmailsController < ApplicationController
-  before_action :set_email, only: [:show, :edit, :update, :destroy]
+  before_action :set_email, only: [:show, :edit, :update, :destroy, :read]
 
   # GET /emails
   # GET /emails.json
@@ -10,6 +10,7 @@ class EmailsController < ApplicationController
   # GET /emails/1
   # GET /emails/1.json
   def show
+    @email.update_attribute(:marks_as_read, true)
   end
 
   # GET /emails/new
@@ -73,6 +74,11 @@ class EmailsController < ApplicationController
         format.js{}
       end
     end
+  end
+
+  def read
+    @email.update_attribute(:marks_as_read, false)
+    redirect_to root_path, notice: "Marked as un-read"
   end
 
   private
