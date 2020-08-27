@@ -28,13 +28,19 @@ class EmailsController < ApplicationController
 
     respond_to do |format|
       if @email.save
-        format.html { redirect_to @email, notice: 'Email was successfully created.' }
+        flash[:success] = 'Email was successfully created.' 
+        format.html { redirect_to root_path }
         format.json { render :show, status: :created, location: @email }
+        format.js{}
       else
+        flash[:error] = 'Email could not be created.'
         format.html { render :new }
         format.json { render json: @email.errors, status: :unprocessable_entity }
+        format.js{}
       end
     end
+
+
   end
 
   # PATCH/PUT /emails/1
@@ -54,10 +60,18 @@ class EmailsController < ApplicationController
   # DELETE /emails/1
   # DELETE /emails/1.json
   def destroy
-    @email.destroy
+
     respond_to do |format|
-      format.html { redirect_to emails_url, notice: 'Email was successfully destroyed.' }
-      format.json { head :no_content }
+      if @email.destroy
+        flash[:success] = 'Email was successfully deleted.' 
+        format.html { redirect_to root_path }
+        format.json { head :no_content }
+        format.js{}
+      else
+        flash[:error] = 'Email could not be deleted.'
+        format.html { redirect_to @email }
+        format.js{}
+      end
     end
   end
 

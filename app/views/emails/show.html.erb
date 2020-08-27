@@ -6,9 +6,12 @@
 </p>
 
 <p>
-  <strong>Body:</strong>
   <%= @email.body %>
 </p>
 
-<%= link_to 'Edit', edit_email_path(@email) %> |
+<div id="emails_wrapper">
+  <%= render "email" %>
+</div>
+
+<%= link_to 'Destroy', @email, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back', emails_path %>
